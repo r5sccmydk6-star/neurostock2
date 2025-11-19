@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeuroStock | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="brand"><i class="fa-solid fa-layer-group"></i> NeuroStock</div>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fa-solid fa-grid-2"></i> Dashboard</a></li>
+                <li class="active"><a href="/portfolio"><i class="fa-solid fa-wallet"></i> Portfolio</a></li>
+                <li><a href="/news"><i class="fa-solid fa-bolt"></i> Markets</a></li>
+                <li><a href="/settings"><i class="fa-solid fa-sliders"></i> Settings</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div class="header-left"><h2>Wealth Overview</h2></div>
+                <div class="header-right"><div class="user-profile"><div class="avatar">AU</div><div class="user-name">Admin</div></div></div>
+            </header>
+
+            <div class="bento-grid">
+                <div class="bento-card"><span class="kpi-label">Net Worth</span><div class="kpi-value" id="totalValue">Loading...</div></div>
+                <div class="bento-card"><span class="kpi-label">P/L</span><div class="kpi-value" id="totalGain">--</div></div>
+                <div class="bento-card"><span class="kpi-label">Assets</span><div class="kpi-value" id="assetCount">--</div></div>
+                <div class="bento-card"><span class="kpi-label">Status</span><div class="kpi-value" style="color:var(--green)">Active</div></div>
+
+                <div class="bento-card span-3" style="min-height: 500px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:20px;"><span class="kpi-label">Holdings</span></div>
+                    <div class="table-container"><table class="stock-table"><thead><tr><th>Asset</th><th>Qty</th><th>Avg</th><th>Cur</th><th>Val</th><th>P/L</th><th></th></tr></thead><tbody id="portfolioTable"></tbody></table></div>
+                </div>
+
+                <div class="bento-card">
+                    <span class="kpi-label">Add Position</span>
+                    <div style="display:flex; flex-direction:column; gap:15px; margin-top:15px;">
+                        <input type="text" id="pTicker" class="search-input" placeholder="Ticker" style="padding:12px 20px;">
+                        <input type="number" id="pShares" class="search-input" placeholder="Shares" style="padding:12px 20px;">
+                        <input type="number" id="pPrice" class="search-input" placeholder="Price" style="padding:12px 20px;">
+                        <button id="addAssetBtn" class="btn-glow" style="width:100%; justify-content:center;">Add</button>
+                    </div>
+                    <div style="margin-top:40px;"><span class="kpi-label">Allocation</span><div style="height:200px; position:relative;"><canvas id="allocationChart"></canvas></div></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/portfolio.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeuroStock | Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="brand"><i class="fa-solid fa-layer-group"></i> NeuroStock</div>
+            <ul class="nav-links">
+                <li class="active"><a href="/"><i class="fa-solid fa-grid-2"></i> Dashboard</a></li>
+                <li><a href="/portfolio"><i class="fa-solid fa-wallet"></i> Portfolio</a></li>
+                <li><a href="/news"><i class="fa-solid fa-bolt"></i> Markets</a></li>
+                <li style="margin-top: auto;"><a href="/settings"><i class="fa-solid fa-sliders"></i> Settings</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div class="header-left"><h2>Market Overview</h2></div>
+                <div class="header-right">
+                    <div class="currency-switch"><input type="checkbox" id="currToggle"><label for="currToggle" class="toggle-label"><div class="slider"></div></label></div>
+                    <div class="user-profile"><div class="avatar">AU</div><div class="user-text"><span class="user-name">Admin User</span></div></div>
+                </div>
+            </header>
+
+            <div class="bento-grid">
+                <div class="controls-area">
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="tickerSearch" class="search-input" placeholder="Search Asset..." autocomplete="off">
+                        <div id="autocomplete-dropdown" class="autocomplete-dropdown"></div>
+                    </div>
+                    <input type="number" id="seqLen" class="input-pill" value="60" title="Lookback">
+                    <input type="number" id="horizon" class="input-pill" value="30" title="Horizon">
+                    <button id="runBtn" class="btn-glow">Generate AI</button>
+                    <button id="exportBtn" class="btn-download" style="display:none;"><i class="fa-solid fa-download"></i></button>
+                </div>
+
+                <div class="bento-card"><span class="kpi-label">Current Price</span><div class="kpi-value" id="currentPrice">--</div><div class="kpi-icon-float"><i class="fa-solid fa-tag"></i></div></div>
+                <div class="bento-card"><span class="kpi-label">AI Target</span><div class="kpi-value" style="color:var(--blue);" id="predictedPrice">--</div><span class="kpi-sub" id="roiValue">--</span><div class="kpi-icon-float"><i class="fa-solid fa-crosshairs"></i></div></div>
+                <div class="bento-card"><span class="kpi-label">NeuroSignal</span><div class="kpi-value" id="neuroSignal">--</div><span class="kpi-sub" id="neuroScoreVal" style="color:var(--text-muted)">Confidence: --</span><div class="kpi-icon-float"><i class="fa-solid fa-satellite-dish"></i></div></div>
+                <div class="bento-card"><span class="kpi-label">Risk</span><div class="kpi-value" id="uncertaintyGap">--</div><span class="kpi-sub" style="color:var(--text-muted)">Standard Deviation</span><div class="kpi-icon-float"><i class="fa-solid fa-chart-area"></i></div></div>
+
+                <div class="bento-card span-3 tall" style="height: 450px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px;"><span class="kpi-label">Technical Forecast</span><div style="display:flex; gap:15px;"><span class="kpi-label" style="cursor:pointer; color:var(--blue);" onclick="toggleInd('price')">Price</span><span class="kpi-label" style="cursor:pointer;" onclick="toggleInd('rsi')">RSI</span></div></div>
+                    <div class="chart-container" id="priceChartContainer"><canvas id="mainChart"></canvas></div>
+                    <div class="chart-container" id="indChartContainer" style="display:none;"><canvas id="indicatorChart"></canvas></div>
+                </div>
+
+                <div class="bento-card info-area">
+                    <span class="kpi-label">Fundamentals</span>
+                    <div id="fundamentalsBar" style="display:flex; flex-direction:column; gap:25px;">
+                        <div><span class="kpi-label">Market Cap</span><div class="kpi-value" style="font-size:1.5rem;" id="fundCap">--</div></div>
+                        <div><span class="kpi-label">P/E Ratio</span><div class="kpi-value" style="font-size:1.5rem;" id="fundPE">--</div></div>
+                        <div><span class="kpi-label">Sector</span><div class="kpi-value" style="font-size:1.2rem;" id="fundSector">--</div></div>
+                        <div><span class="kpi-label">52W High</span><div class="kpi-value" style="font-size:1.5rem; color:var(--green);" id="fundHigh">--</div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="loader-overlay" id="loader"><div class="spinner"></div></div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>function setTicker(t){document.getElementById('tickerSearch').value=t;}</script>
+</body>
+</html>

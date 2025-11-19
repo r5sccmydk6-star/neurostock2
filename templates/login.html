@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>body{display:flex; justify-content:center; align-items:center;}</style>
+</head>
+<body>
+    <div class="bento-card" style="width:400px; text-align:center;">
+        <h2 style="color:#fff; margin-bottom:30px;">NeuroStock</h2>
+        <form method="POST" action="/login">
+            <div style="margin-bottom:15px; text-align:left;"><label class="kpi-label">Username</label><input type="text" name="username" class="search-input" required></div>
+            <div style="margin-bottom:20px; text-align:left;"><label class="kpi-label">Password</label><input type="password" name="password" class="search-input" required></div>
+            <button class="btn-glow" style="width:100%; justify-content:center;">Login</button>
+        </form>
+        <div style="margin-top:20px; color:var(--text-muted); cursor:pointer;" onclick="document.querySelector('form').action='/register'; document.querySelector('button').innerText='Register';">Create Account</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeuroStock | Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="brand"><i class="fa-solid fa-layer-group"></i> NeuroStock</div>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fa-solid fa-grid-2"></i> Dashboard</a></li>
+                <li><a href="/portfolio"><i class="fa-solid fa-wallet"></i> Portfolio</a></li>
+                <li><a href="/news"><i class="fa-solid fa-bolt"></i> Markets</a></li>
+                <li class="active" style="margin-top: auto;"><a href="/settings"><i class="fa-solid fa-sliders"></i> Settings</a></li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <header class="page-header">
+                <div class="header-left"><h2>Configuration</h2></div>
+                <div class="header-right"><div class="user-profile"><div class="avatar">AU</div><div class="user-name">Admin</div></div></div>
+            </header>
+            <div class="bento-grid">
+                <div class="bento-card"><span class="kpi-label">Database Size</span><div class="kpi-value" id="dbSize">--</div></div>
+                <div class="bento-card"><div class="kpi-value" id="modelCount">--</div><span class="kpi-label">Cached Models</span></div>
+                <div class="bento-card"><div class="kpi-value" id="tickerCount">--</div><span class="kpi-label">Active Datasets</span></div>
+                <div class="bento-card"><div class="kpi-value" style="color:var(--green);">Online</div><span class="kpi-label">System Status</span></div>
+                <div class="bento-card span-2">
+                    <h3 style="font-size:1.2rem; font-weight:600; color:#fff; margin-bottom:10px;">Clear AI Cache</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Force model retraining on new data.</p>
+                    <button id="clearModelsBtn" class="btn-glow" style="width:fit-content; background:var(--orange);">Clear Cache</button>
+                </div>
+                <div class="bento-card span-2">
+                    <h3 style="font-size:1.2rem; font-weight:600; color:#fff; margin-bottom:10px;">Purge Data</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Reset local database completely.</p>
+                    <button id="clearDataBtn" class="btn-glow" style="width:fit-content; background:var(--red);">Purge Database</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeuroStock | News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="brand"><i class="fa-solid fa-layer-group"></i> NeuroStock</div>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fa-solid fa-grid-2"></i> Dashboard</a></li>
+                <li><a href="/portfolio"><i class="fa-solid fa-wallet"></i> Portfolio</a></li>
+                <li class="active"><a href="/news"><i class="fa-solid fa-bolt"></i> Markets</a></li>
+                <li><a href="/settings"><i class="fa-solid fa-sliders"></i> Settings</a></li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <header class="page-header">
+                <div class="header-left"><h2>Global Intelligence</h2></div>
+                <div class="header-right"><div class="user-profile"><div class="avatar">AU</div><div class="user-name">Admin</div></div></div>
+            </header>
+            <div class="bento-grid">
+                <div class="bento-card span-4" style="flex-direction:row; align-items:center; gap:20px;">
+                    <div class="search-wrapper" style="flex:1;"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="newsTickerInput" class="search-input" placeholder="Filter News..." value="AAPL"></div>
+                    <button id="fetchNewsBtn" class="btn-glow">Fetch</button>
+                </div>
+                <div class="span-4" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;" id="newsContainer"></div>
+            </div>
+        </main>
+    </div>
+    <div class="loader-overlay" id="loader"><div class="spinner"></div></div>
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            const btn=document.getElementById('fetchNewsBtn'), cont=document.getElementById('newsContainer'), ldr=document.getElementById('loader');
+            async function f(t){
+                ldr.classList.add('active'); try{
+                const r=await fetch('/api/news',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticker:t})});
+                const d=await r.json(); cont.innerHTML='';
+                d.news.forEach(i=>{
+                    let col='var(--text-muted)'; if(i.sentiment==='Bullish') col='var(--green)'; if(i.sentiment==='Bearish') col='var(--red)';
+                    cont.innerHTML+=`<div class="bento-card" style="min-height:200px;"><div style="display:flex; justify-content:space-between; margin-bottom:15px;"><span style="font-size:0.8rem; color:var(--text-muted);">${i.published.slice(0,16)}</span><b style="color:${col}; text-transform:uppercase; font-size:0.8rem;">${i.sentiment}</b></div><h3 style="font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:auto;">${i.title}</h3><a href="${i.link}" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600; font-size:0.9rem; margin-top:20px;">Read <i class="fa-solid fa-arrow-right"></i></a></div>`
+                });
+                }catch(e){}finally{ldr.classList.remove('active');}
+            }
+            f('AAPL'); btn.addEventListener('click',()=>f(document.getElementById('newsTickerInput').value));
+        });
+    </script>
+</body>
+</html>
